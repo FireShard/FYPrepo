@@ -13,10 +13,9 @@ class LaptopDetailsSerializer(serializers.ModelSerializer):
 
 class UserLaptopSerializer(serializers.ModelSerializer):
     ram = RamDetailsSerializer(read_only=True)  # Nest the RamDetailsSerializer
-    laptop = LaptopDetailsSerializer(read_only=True)  # Nest the LaptopDetailsSerializer
+    # laptop = LaptopDetailsSerializer(read_only=True)  # Nest the LaptopDetailsSerializer
     ram_id = serializers.PrimaryKeyRelatedField(queryset=RamDetails.objects.all(), source='ram', write_only=True, allow_null=True) # For write operations
-    laptop_id = serializers.PrimaryKeyRelatedField(queryset=LaptopDetails.objects.all(), source='laptop', write_only=True) # For write operations
-
+    
     class Meta:
         model = UserLaptop
         fields = '__all__'
