@@ -54,17 +54,22 @@
         },
 
         methods:{
-            async fetchUserLaptop(){
-                try{
-                    const response = await axios.get("http://127.0.0.1/primaryApp/api/UserLaptop");
-                    this.userLaptop = response.UserLapData;
-                }
-                catch(err){
+            async fetchUserLaptop() {
+                try {
+                    const response = await axios.get("http://127.0.0.1:8000/UserLaptop");
+
+                    // Log success to the console
+                    console.log("User Laptop Data fetched successfully:", response.data);
+
+                    // Assuming 'UserLapData' is the correct field from the response
+                    this.userLaptop = response.data.UserLapData;
+
+                } catch (err) {
+                    // Log error message to the console
                     this.error = "Failed to fetch User Laptop Data";
-                    console.error(err);
+                    console.error("Error fetching data:", err);
                 }
             }
-            
         }
     }
 </script>
