@@ -29,5 +29,5 @@ class UserLaptop(models.Model):
     CPUName = models.CharField(max_length=255)
     CPUGen = models.CharField(max_length=255)
     ramType = models.CharField(max_length=255)
-    ram = models.ForeignKey(RamDetails, on_delete=models.CASCADE)
+    ramid = models.ForeignKey(RamDetails, on_delete=models.CASCADE)
     
