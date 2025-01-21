@@ -80,7 +80,7 @@ export default{
                 };
 
                 axios
-                    .post("http://127.0.0.1/primaryApp/api/UserLaptop", newUserLaptop)
+                    .post("http://127.0.0.1:8000/UserLaptop", newUserLaptop)
                     .then(response => {
                         console.log("Added Laptop Details Successfully", response.data);
                         alert("Added Laptop Details Successfully!");
