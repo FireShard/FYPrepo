@@ -22,6 +22,7 @@ from primaryApp import views
 router = routers.DefaultRouter()
 router.register(r'UserLaptop', views.UserLaptopViewSet)
 router.register(r'LaptopDetails', views.LaptopDetailsViewset)
+router.register(r'RamDetails', views.RamDetailsViewset)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

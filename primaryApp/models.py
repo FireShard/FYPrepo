@@ -4,11 +4,9 @@ from django.db import models
 class RamDetails(models.Model):
     ramid = models.AutoField(primary_key=True)
     shopeeListing = models.CharField(max_length=255)
-    ramLink = models.URLField(null=True, blank=True)
+    ramLink = models.URLField()
 
-    def __str__(self):
-        return f"{self.ramid} {self.shopeeListing} {self.ramLink}"
-
+#tak pakai
 class LaptopDetails(models.Model):
     laptopid = models.AutoField(primary_key=True)
     manufacturer = models.CharField(max_length=255)
@@ -31,8 +29,5 @@ class UserLaptop(models.Model):
     CPUName = models.CharField(max_length=255)
     CPUGen = models.CharField(max_length=255)
     ramType = models.CharField(max_length=255)
-    ram = models.ForeignKey(RamDetails, on_delete=models.SET_NULL, null=True, blank=True, related_name='user_laptops')
-    laptop = models.ForeignKey(LaptopDetails, on_delete=models.CASCADE, related_name='user_laptops')
-
-    def __str__(self):
-        return f"User Laptop: {self.laptop}"
+    ram = models.ForeignKey(RamDetails, on_delete=models.CASCADE)
+    
