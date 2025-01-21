@@ -8,7 +8,7 @@ class UserLaptopViewSet(viewsets.ModelViewSet):
     queryset = UserLaptop.objects.all().order_by('userid')
     serializer_class = UserLaptopSerializer
 
-class LaptopDetailsSerializer(viewsets.ModelViewSet):
+class LaptopDetailsViewset(viewsets.ModelViewSet):
     queryset = LaptopDetails.objects.all().order_by('laptopid')
     serializer_class = LaptopDetailsSerializer
 
