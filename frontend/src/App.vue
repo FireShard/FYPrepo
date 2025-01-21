@@ -1,85 +1,63 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+
+import { RouterLink } from 'vue-router';
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <div id="appStyle">
+    <nav class="navbar navbar-expand-md bg-body py-3" style="box-shadow: 0px 0px 10px 5px;">
+            <div class="container"><a class="navbar-brand d-flex align-items-center" href="#">
+              <span><router-link to="/" class="a-router">Final Year Project 2025</router-link></span>
+                </a>
+                <div class="collapse navbar-collapse flex-grow-0 order-md-first" id="navcol-4">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item"></li>
+                        <li class="nav-item"></li>
+                    </ul>
+                    <div class="d-md-none my-2"><button class="btn btn-light me-2" type="button">Button</button><button class="btn btn-primary" type="button">Button</button></div>
+                </div>
+                <div class="d-none d-md-block"></div>
+            </div>
+        </nav>
+  <router-view />
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+<script>
+export default {
+  computed: {
+    backgroundImage() {
+      switch (this.$route.name) {
+        case 'home':
+          return 'url("./src/assets/bg1.jpg")'; 
+        case 'laptopinfo':
+          return 'url("./src/assets/bg2.jpg")'; 
+        case 'recommend':
+          return 'url("./src/assets/bg3.jpg")';
+        default:
+          return 'url("./src/assets/bg1.jpg")'; 
+      }
+    },
+  },
+};
+</script>
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+<style>
+  #appStyle {
+    background-image: v-bind(backgroundImage); 
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
   }
-
-  .logo {
-    margin: 0 2rem 0 0;
+  .a-router{
+    text-decoration: none;
+    color: black;
+    font-family: ABeeZee, sans-serif;
   }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
 </style>
+
+<style scoped>
+  
+</style>
+
+

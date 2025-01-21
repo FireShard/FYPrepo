@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <html>
-    <body>
-        {% if name %}
-        <h1>Hello {{ name }}</h1>
-        {% else %}
-        <h1>Hello World</h1>
-        {% endif %}
-    </body>
+<head>
+  <title>Storage Estimation</title>
+</head>
+<body>
+  <h1>Storage Estimation</h1>
+  <p id="storageInfo">Checking storage...</p>
+
+  <script>
+    if ('storage' in navigator && 'estimate' in navigator.storage) {
+      navigator.storage.estimate().then(({ usage, quota }) => {
+        const usageGB = usage / (1024 * 1024 * 1024); // Convert bytes to GB
+        const quotaGB = quota / (1024 * 1024 * 1024); // Convert bytes to GB
+
+        document.getElementById('storageInfo').textContent = 
+          `Using ${usageGB.toFixed(2)} GB out of ${quotaGB.toFixed(2)} GB.`;
+      }).catch(error => {
+        document.getElementById('storageInfo').textContent = 
+          "Error estimating storage: " + error;
+      });
+    } else {
+      document.getElementById('storageInfo').textContent = 
+        "Storage estimation not supported.";
+    }
+  </script>
+</body>
 </html>
 
