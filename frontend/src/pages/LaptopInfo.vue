@@ -44,7 +44,7 @@
                     <input class="form-control" type="text" style="color: rgb(111,121,130);" placeholder="7th, 8th, 9th, etc" v-model="CPUGen">
                 </div>
                 <div class="col-xl-1"></div>
-            </div><button class="btn btn-primary btn-lg mt-2 me-3" type="submit" @click="goToRecommend">Submit</button>
+            </div><button class="btn btn-primary btn-lg mt-2 me-3" type="submit">Submit</button>
         </form>
     </div>
 </body>
@@ -63,7 +63,8 @@ export default{
                 CPUbrand: "",
                 CPUName: "",
                 CPUGen: "",
-                ramType: "",
+                ramType: "DDR4",
+                ramid: "1"
             }
         },
 
@@ -73,17 +74,19 @@ export default{
                     manufacturer: this.manufacturer,
                     ramSize: this.ramSize,
                     architecture: this.architecture,
-                    CPUbrand: this.architecture,
-                    CPUName: this.architecture,
-                    CPUGen: this.architecture,
-                    ramType: this.architecture,
+                    CPUbrand: this.CPUbrand,
+                    CPUName: this.CPUName,
+                    CPUGen: this.CPUGen,
+                    ramType: this.ramType,
+                    ramid: this.ramid
                 };
 
                 axios
-                    .post("http://127.0.0.1:8000/UserLaptop", newUserLaptop)
+                    .post("http://127.0.0.1:8000/UserLaptop/", newUserLaptop)
                     .then(response => {
                         console.log("Added Laptop Details Successfully", response.data);
                         alert("Added Laptop Details Successfully!");
+                        this.goToRecommend();
                     })
                     .catch((error) =>{
                         console.error("Error in saving laptop data", error)

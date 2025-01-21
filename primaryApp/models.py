@@ -24,7 +24,7 @@ class UserLaptop(models.Model):
     userid = models.AutoField(primary_key=True)
     manufacturer = models.CharField(max_length=255)
     ramSize = models.IntegerField()
-    architecture = models.IntegerField()
+    architecture = models.CharField(max_length=255)
     CPUbrand = models.CharField(max_length=255)
     CPUName = models.CharField(max_length=255)
     CPUGen = models.CharField(max_length=255)
