@@ -7,5 +7,5 @@ router.register(r'UserLaptop', views.UserLaptopViewSet)
 router.register(r'LaptopDetails', views.LaptopDetailsSerializer)
 
 urlpatterns = [
-    path('', include(router.url))
+    path('', include(router.urls))
 ]
