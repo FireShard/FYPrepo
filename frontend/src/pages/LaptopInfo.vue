@@ -3,7 +3,7 @@
         <div class="text-center mb-0 pb-0 mt-0 pt-5" style="padding-top: 150px;">
         <h1 class="mb-5">Enter Your Laptop Information</h1>
         
-        <form class="pe-3 ms-0 ps-3" @submit.prevent="addUserLaptop">
+        <form class="pe-3 ms-0 ps-3" @submit.prevent="predictRamType">
             <div class="row" style="background: rgba(230,230,230,0.3);">
                 <div class="col-xl-1"></div>
                 <div class="col">
@@ -63,7 +63,7 @@ export default{
                 CPUbrand: "",
                 CPUName: "",
                 CPUGen: "",
-                ramType: "DDR4",
+                ramType: "",
                 ramid: "1"
             }
         },
@@ -89,13 +89,50 @@ export default{
                         this.goToRecommend();
                     })
                     .catch((error) =>{
-                        console.error("Error in saving laptop data", error)
+                        console.error("Error in saving laptop data", error);
                         alert("Failed in saving laptop data. Please try again");
                     })     
             },
             goToRecommend(){
-                this.$router.push("/recommend");
+                this.$router.push({ 
+                    path: '/recommend', 
+                    query: { 
+                    manufacturer: this.manufacturer, 
+                    ramSize: this.ramSize, 
+                    architecture: this.architecture, 
+                    CPUbrand: this.CPUbrand, 
+                    CPUName: this.CPUName, 
+                    CPUGen: this.CPUGen, 
+                    ramType: this.ramType 
+                    } 
+                });
+            },
+
+            async predictRamType() {
+                try {
+
+                    const response = await axios.post('http://127.0.0.1:8000/predictRAMType/',{
+                        processor_brand: this.CPUbrand,
+                        processor_name: this.CPUName,
+                        processor_gnrtn: this.CPUGen,
+                        os_bit: this.architecture,
+                        brand: this.manufacturer,
+                        ram_gb: this.ramSize,
+                    });
+
+                    console.log('Received data:', response.data);
+                    this.ramType = response.data;
+                    this.error = null;
+                    console.log("RAM Type Predicted Successfully", response.data);
+                    alert("RAM Type Predicted Successfully!");
+                    this.goToRecommend();
+                } 
+                catch (error) {
+                    console.error('Error predicting RAM type:', error);
+                    this.ramType = 'Prediction Failed';
+                    alert("Failed in predicting RAM type. Please try again");
+                }
             },
         },
-    };
+}
 </script>

@@ -18,13 +18,18 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from primaryApp import views
+from .views import PredictRAMTypeView, PredictCompatibilityView
 
 router = routers.DefaultRouter()
 router.register(r'UserLaptop', views.UserLaptopViewSet)
 router.register(r'LaptopDetails', views.LaptopDetailsViewset)
 router.register(r'RamDetails', views.RamDetailsViewset)
+# router.register(r'predict', PredictView.as_view())
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path('predictRAMType/', PredictRAMTypeView.as_view(), name='predict_ram_type'),
+    path('predictCompatibility/', PredictCompatibilityView.as_view(), name='predict_ram_compatibility'),
 ]

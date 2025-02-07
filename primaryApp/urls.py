@@ -6,6 +6,7 @@ router = routers.DefaultRouter()
 router.register(r'UserLaptop', views.UserLaptopViewSet)
 router.register(r'LaptopDetails', views.LaptopDetailsViewSet)
 
+
 urlpatterns = [
     path('', include(router.urls)),
 ]

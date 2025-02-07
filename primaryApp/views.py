@@ -20,3 +20,5 @@ class RamDetailsViewset(viewsets.ModelViewSet):
 
 
 
+
+
