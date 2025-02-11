@@ -28,13 +28,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Cell 1</td>
-                        <td>Cell 2</td>
-                    </tr>
-                    <tr>
-                        <td>Cell 3</td>
-                        <td>Cell 4</td>
+                    <tr v-for="compatibleRAMList in filteredRAMs" :key="compatibleRAMList.id">
+                        <td>{{ compatibleRAMList.shopeeListing }}</td>
+                        <td>{{ compatibleRAMList.ramLink }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -51,8 +47,10 @@
         data() {
             return {
                 receivedData: {},
-
+                ramData: [],
                 ramLink: "",
+                error: null,
+                compatibleRAMList: [],
             };
         },
 
@@ -79,23 +77,30 @@
         },
 
         mounted(){
-            this.fetchUserLaptop();
+            this.fetchRamDetails();
+        },
+
+        computed:{
+            filteredRAMs() {
+            return this.compatibleRAMList;
+        }
         },
 
         methods:{
-            async fetchUserLaptop() {
+            async fetchRamDetails() {
                 try {
-                    const response = await axios.get("http://127.0.0.1:8000/UserLaptop");
+                    const response = await axios.get("http://127.0.0.1:8000/RamDetails");
 
                     // Log success to the console
-                    console.log("User Laptop Data fetched successfully:", response.data);
+                    console.log("RAM Data fetched successfully:", response.data);
 
                     // Assuming 'UserLapData' is the correct field from the response
-                    this.userLaptop = response.data.UserLapData;
+                    this.ramData = response.data;
+                    this.filterCompatbleRAM();
 
                 } catch (err) {
                     // Log error message to the console
-                    this.error = "Failed to fetch User Laptop Data";
+                    this.error = "Failed to fetch User RAM Data";
                     console.error("Error fetching data:", err);
                 }
             },
@@ -108,7 +113,6 @@
                     });
 
                     console.log('RAM Type Sent:', this.$route.query.ramType);
-                    console.log('RAM Type Sent:', this.$route.query.ramType);
                     console.log('Received data:', response.data);
                     this.error = null;
                     console.log("RAM Compatibility Predicted Successfully!", response.data);
@@ -119,7 +123,45 @@
                     this.error = "Failed to fetch User Laptop Data";
                     console.error("Error fetching data:", err);
                 }
-            }
+            },
+
+            async filterCompatbleRAM() {
+                try {
+                    const ramDetailList = this.ramData;/* Your data source for RAM details */ //  This should be an array of objects
+                    const compatibleRAM = [];
+                    const results = []; // Array to store results for each RAM link
+
+                    for (const ramDetails of ramDetailList) {
+                        const ramLink = ramDetails.ramLink; // Access the ramLink from each item in the array
+
+                        const response = await axios.post('http://127.0.0.1:8000/predictCompatibility/', {
+                            word1: this.$route.query.ramType,
+                            word2: ramLink,
+                        });
+
+                        console.log('RAM Type Sent:', this.$route.query.ramType);
+                        console.log('RAM Link Sent:', ramLink);
+                        console.log('Received data:', response.data);
+
+                        // Check for compatibility and add to the filtered list
+                        if (response.data.includes("Compatible")) { // Improved compatibility check
+                            compatibleRAM.push(ramDetails); // Store the entire ramDetail object
+                        }
+
+                        console.log("RAM Compatibility Predicted:", response.data);
+                    }
+
+                    this.error = null;
+
+                    console.log("Compatible RAM Details:", compatibleRAM);
+
+                    this.compatibleRAMList = compatibleRAM; // Store the filtered list in a data property
+
+                } catch (err) {
+                    this.error = "Failed to fetch RAM Compatibility Data";
+                    console.error("Error fetching data:", err);
+                }
+                },
         }
     }
 </script>

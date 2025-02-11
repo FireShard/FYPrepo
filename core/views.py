@@ -40,7 +40,7 @@ class PredictRAMTypeView(View):
 
             processor_brand = data.get('processor_brand', None).lower()
             processor_name = data.get('processor_name', None).lower()
-            processor_gnrtn = data.get('processor_gnrtn', None)
+            processor_gnrtn = data.get('processor_gnrtn', None).lower()
             os_bit = data.get('os_bit', None)
             brand = data.get('brand', None).lower()
             ram_gb = data.get('ram_gb', None)

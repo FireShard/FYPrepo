@@ -4,7 +4,7 @@ from django.db import models
 class RamDetails(models.Model):
     ramid = models.AutoField(primary_key=True)
     shopeeListing = models.CharField(max_length=255)
-    ramLink = models.URLField()
+    ramLink = models.URLField(max_length=300)
 
 #tak pakai
 class LaptopDetails(models.Model):
